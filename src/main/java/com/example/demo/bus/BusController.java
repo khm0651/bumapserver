@@ -120,6 +120,7 @@ public class BusController {
 					
 				}
 			}
+			System.out.println("1");
 			Bus bus = new Bus();
 			bus.setBusStation(name);
 			bus.setImg(imgList);
