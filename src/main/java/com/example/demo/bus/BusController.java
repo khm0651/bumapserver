@@ -120,7 +120,6 @@ public class BusController {
 					
 				}
 			}
-			System.out.println("1");
 			Bus bus = new Bus();
 			bus.setBusStation(name);
 			bus.setImg(imgList);
@@ -130,7 +129,6 @@ public class BusController {
 				map1.put(toBuDay.get(i), toBuTime.get(i));
 			}
 			bus.setToBu(map1);
-			System.out.println("1");
 			bus.setToBuTakePlace(toBuTakePlace);
 			HashMap<String, String> map2 = new HashMap<String,String>();
 			for(int i =0 ; i<toHomeDay.size(); i++) {
