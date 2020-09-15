@@ -130,6 +130,7 @@ public class BusController {
 				map1.put(toBuDay.get(i), toBuTime.get(i));
 			}
 			bus.setToBu(map1);
+			System.out.println("2");
 			bus.setToBuTakePlace(toBuTakePlace);
 			HashMap<String, String> map2 = new HashMap<String,String>();
 			for(int i =0 ; i<toHomeDay.size(); i++) {
