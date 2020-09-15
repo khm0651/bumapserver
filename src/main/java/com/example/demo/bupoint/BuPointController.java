@@ -48,7 +48,7 @@ public class BuPointController {
 				.get();
 		Elements panel = doc.getElementsByClass("panel-primary wrapper");
 		String name = panel.get(0).select("header").text();
-		name = name.substring(0,name.indexOf("´Ô"));
+		name = name.substring(0,name.indexOf("ë‹˜"));
 		Elements buDiv = panel.get(0).getElementsByClass("col-lg-12 tab_sm no-padder").get(0).select("div");
 		ArrayList<String> buInfo = new ArrayList<String>();
 		for(int i =1; i< buDiv.size() ; i++) {

@@ -53,12 +53,12 @@ public class BusController {
 
 					}
 					if(i==0 && j==1) {
-						if(tds.get(j).text().equals("µÓ±≥")) {
+						if(tds.get(j).text().equals("Îì±Íµê")) {
 							isToBu = true;
 						}
 					}
 					if(isToBu && i==1 &&j==0) {
-						if(tds.get(j).text().equals("«œ±≥")) {
+						if(tds.get(j).text().equals("ÌïòÍµê")) {
 							isToBu=false;
 						}
 					}
@@ -130,11 +130,11 @@ public class BusController {
 				map1.put(toBuDay.get(i), toBuTime.get(i));
 			}
 			bus.setToBu(map1);
-			System.out.println("2");
+			System.out.println("1");
 			bus.setToBuTakePlace(toBuTakePlace);
 			HashMap<String, String> map2 = new HashMap<String,String>();
 			for(int i =0 ; i<toHomeDay.size(); i++) {
-				if(toHomeTime.get(0).contains("øÓ«‡æ¯¿Ω")) {
+				if(toHomeTime.get(0).contains("Ïö¥ÌñâÏóÜÏùå")) {
 					toHomeTime.add(toHomeTime.get(0));
 				}
 				map2.put(toHomeDay.get(i), toHomeTime.get(i));

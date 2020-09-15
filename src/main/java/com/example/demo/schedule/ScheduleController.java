@@ -79,15 +79,15 @@ public class ScheduleController {
 			String prName = e.attr("value").split(",")[1];
 			String cn = e.text().trim();
 			HashMap<String,String> urlList = new HashMap<String,String>();
-			urlList.put("ÇÐ½À¸ñÂ÷", "http://bctl.bu.ac.kr/Course.do?cmd=viewStudyHome&courseDTO.courseId="+classKey+"&boardInfoDTO.boardInfoGubun=study_home&boardGubun=study_course&gubun=study_main");
-			urlList.put("°úÁ¦", "http://bctl.bu.ac.kr/Report.do?cmd=viewReportInfoPageList&boardInfoDTO.boardInfoGubun=report&courseDTO.courseId="+classKey+"&mainDTO.parentMenuId=menu_00104&mainDTO.menuId=menu_00063");
+			urlList.put("í•™ìŠµëª©ì°¨", "http://bctl.bu.ac.kr/Course.do?cmd=viewStudyHome&courseDTO.courseId="+classKey+"&boardInfoDTO.boardInfoGubun=study_home&boardGubun=study_course&gubun=study_main");
+			urlList.put("ê³¼ì œ", "http://bctl.bu.ac.kr/Report.do?cmd=viewReportInfoPageList&boardInfoDTO.boardInfoGubun=report&courseDTO.courseId="+classKey+"&mainDTO.parentMenuId=menu_00104&mainDTO.menuId=menu_00063");
 			
 			HashMap<String,Object> lectureMap = new HashMap<String,Object>();
 			for(int z = 0; z<urlList.size(); z++) {
 				
 				if(z==0) {
 					String curpage = "";
-					Document work = Jsoup.connect(urlList.get("°úÁ¦")+curpage)
+					Document work = Jsoup.connect(urlList.get("ê³¼ì œ")+curpage)
 							.header("Content-Type", "application/x-www-form-urlencoded")
 							.header("Cookie", cookie)
 							.get();
@@ -95,10 +95,10 @@ public class ScheduleController {
 					Element listBox = work.getElementById("listBox");
 					
 					String noticeHref = work.getElementById("1").getElementsByClass("menuSub mp2").select("li").get(0).select("a").attr("href");
-					urlList.put("°øÁö»çÇ×", "http://bctl.bu.ac.kr"+noticeHref);
+					urlList.put("ê³µì§€ì‚¬í•­", "http://bctl.bu.ac.kr"+noticeHref);
 					
 					if(listBox.selectFirst("div").className().equals("search_unfine")) {
-						lectureMap.put("°úÁ¦", workMap);
+						lectureMap.put("ê³¼ì œ", workMap);
 						continue;
 					}else {
 						Elements list = listBox.getElementsByClass("listContent pb20");
@@ -114,11 +114,11 @@ public class ScheduleController {
 								Elements heads = table.select("thead").select("th");
 								for(Element head : heads) {
 									HashMap<String,String> map = new HashMap<String,String>();
-									if(head.text().equals("Á¦Ãâ±â°£")) {
+									if(head.text().equals("ì œì¶œê¸°ê°„")) {
 										map.put(head.text(), table.select("tbody").select("td").get(0).text());
 										w.setTime(map);;
 									}
-									if(head.text().equals("Á¦Ãâ¿©ºÎ")) {
+									if(head.text().equals("ì œì¶œì—¬ë¶€")) {
 										map.put(head.text(), table.select("tbody").select("td").get(3).text());
 										w.setIsPresent(map);
 									}
@@ -133,7 +133,7 @@ public class ScheduleController {
 					
 
 					
-					lectureMap.put("°úÁ¦", workMap);
+					lectureMap.put("ê³¼ì œ", workMap);
 				}
 				
 				if(z == 1) {
@@ -144,7 +144,7 @@ public class ScheduleController {
 					while(f) {
 						
 						int i =0;	
-						Document lectureIndex = Jsoup.connect(urlList.get("ÇÐ½À¸ñÂ÷"))
+						Document lectureIndex = Jsoup.connect(urlList.get("í•™ìŠµëª©ì°¨"))
 								.header("Content-Type", "application/x-www-form-urlencoded")
 								.header("Cookie", cookie)
 								.data("lessonContentsDTO.pageGubun","next")
@@ -193,7 +193,7 @@ public class ScheduleController {
 						
 					}
 					
-					lectureMap.put("ÇÐ½À¸ñÂ÷", lectureInfoMap);
+					lectureMap.put("í•™ìŠµëª©ì°¨", lectureInfoMap);
 					
 				}
 				
@@ -210,7 +210,7 @@ public class ScheduleController {
 					
 					while(f) {
 						
-						Document notice = Jsoup.connect(urlList.get("°øÁö»çÇ×")+curpage)
+						Document notice = Jsoup.connect(urlList.get("ê³µì§€ì‚¬í•­")+curpage)
 								.header("Content-Type", "application/x-www-form-urlencoded")
 								.header("Cookie", cookie)
 								.get();
@@ -250,7 +250,7 @@ public class ScheduleController {
 					}
 					
 					
-					lectureMap.put("°øÁö»çÇ×", noticeMap);
+					lectureMap.put("ê³µì§€ì‚¬í•­", noticeMap);
 				}
 				
 			}

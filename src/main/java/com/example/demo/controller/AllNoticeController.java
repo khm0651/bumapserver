@@ -46,7 +46,7 @@ public class AllNoticeController {
 	
 	private static void sendPostJson(String page) throws Exception{
 		URL url = new URL("http://www.bu.ac.kr/mainNotice/web/artclList.do");
-		Map<String,Object> params = new LinkedHashMap(); // ∆ƒ∂ÛπÃ≈Õ ºº∆√
+		Map<String,Object> params = new LinkedHashMap(); // ÌååÎùºÎØ∏ÌÑ∞ ÏÑ∏ÌåÖ
         params.put("layout", "K8T6lHgnWF8g6uSVl0w0CQ%3D%3D");
         params.put("page", page);
         params.put("srchColumn", "");
@@ -66,7 +66,7 @@ public class AllNoticeController {
         conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
         conn.setDoOutput(true);
-        conn.getOutputStream().write(postDataBytes); // POST »£√‚
+        conn.getOutputStream().write(postDataBytes); // POST Ìò∏Ï∂ú
  
         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
  
@@ -75,7 +75,7 @@ public class AllNoticeController {
         Boolean isStart = false;
         Boolean isContinue = false;
         Notice notice = new Notice();
-        while((inputLine = in.readLine()) != null) { // response √‚∑¬
+        while((inputLine = in.readLine()) != null) { // response Ï∂úÎ†•
 
      
         	
