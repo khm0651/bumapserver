@@ -139,7 +139,7 @@ public class ScheduleController {
 				if(z == 1) {
 					String curPage = "0";
 					Boolean f = true;
-					HashMap<String,HashMap<String,String>> lectureInfoMap = new HashMap<String,HashMap<String,String>>();
+					HashMap<String,HashMap<String,HashMap<String,String>>> lectureInfoMap = new HashMap<String,HashMap<String,HashMap<String,String>>>();
 					
 					while(f) {
 						
@@ -166,16 +166,26 @@ public class ScheduleController {
 							if(t.equals("")) continue;
 							
 							Elements divs = infos.get(i).select("div");
-							HashMap <String,String> infoMap = new HashMap<String,String>();
+							HashMap <String,HashMap<String,String>> infoMap = new HashMap<String,HashMap<String,String>>();
 							int v=1;
 							int c=1;
 							for(Element div : divs) {
 								
 								if(div.hasClass("video on")) {
-									infoMap.put("video-"+String.valueOf(v), div.text());
+									String l_title = div.selectFirst("li").text();
+									String state = div.getElementsByClass("bar").first().selectFirst("li").text();
+									HashMap<String,String> map = new HashMap<String,String>();
+									map.put("title", l_title);
+									map.put("state", state);
+									infoMap.put("video-"+String.valueOf(v), map);
 									v++;
 								}else {
-									infoMap.put("check-"+String.valueOf(c), div.text());
+									String l_title = div.selectFirst("li").text();
+									String state = div.getElementsByClass("bar").first().selectFirst("li").text();
+									HashMap<String,String> map = new HashMap<String,String>();
+									map.put("title", l_title);
+									map.put("state", state);
+									infoMap.put("check-"+String.valueOf(c), map);
 									c++;
 								}
 							}
