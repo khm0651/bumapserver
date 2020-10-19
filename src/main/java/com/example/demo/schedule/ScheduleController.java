@@ -223,6 +223,7 @@ public class ScheduleController {
 						Document notice = Jsoup.connect(urlList.get("공지사항")+curpage)
 								.header("Content-Type", "application/x-www-form-urlencoded")
 								.header("Cookie", cookie)
+								.data("type","U")
 								.get();
 						
 						Element listBox = notice.getElementById("listBox");
