@@ -24,8 +24,8 @@ public class ScheduleController {
 	public MyLectureSchedule MySchedule() throws Exception {
 		
 		Document doc = Jsoup.connect("http://bctl.bu.ac.kr/User.do")
-				.data("userId", "20151096")
-				.data("password", "chan3872!")
+				.data("userId", "20153283")
+				.data("password", "dbstn1357!@")
 				.data("userDTO.loginType","30")
 				.data("cmd","loginUser")
 				.header("Content-Type", "application/x-www-form-urlencoded")
@@ -37,8 +37,8 @@ public class ScheduleController {
 				.post();
 		
 		Connection.Response response = Jsoup.connect("http://bctl.bu.ac.kr/User.do")
-				.data("userId", "20151096")
-				.data("password", "chan3872!")
+				.data("userId", "20153283")
+				.data("password", "dbstn1357!@")
 				.data("userDTO.loginType","30")
 				.data("cmd","loginUser")
 				.header("Content-Type", "application/x-www-form-urlencoded")

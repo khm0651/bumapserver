@@ -3,6 +3,7 @@ package com.example.demo.bus;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,6 +13,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.WriteResult;
+import com.google.firebase.cloud.FirestoreClient;
+import com.google.firebase.database.FirebaseDatabase;
+
 
 @RestController
 public class BusController {
@@ -19,12 +27,14 @@ public class BusController {
 	private static String BU_BUS_URL = "http://www.bu.ac.kr/web/3485/subview.do";
 	private static String BU_BASE_URL = "http://www.bu.ac.kr";
 	private static ArrayList<Bus> busList = new ArrayList<Bus>();
+	public static final String COL_NAME="bus";
 
 
 	@GetMapping(value ="/bus")
 	@ResponseBody
 	public ArrayList<Bus> busRest() throws IOException {
 		
+		FirebaseDatabase dbFirestore = FirebaseDatabase.getInstance();
 		Document doc = Jsoup.connect(BU_BUS_URL).get();
 		Elements bus_wrap = doc.getElementsByClass("bus_wrap");
 		for(Element b : bus_wrap) {
@@ -140,11 +150,14 @@ public class BusController {
 			bus.setToHome(map2);
 			bus.setToHomeTakePlace(toHomeTakePlace);
 			busList.add(bus);
+			
+			//dbFirestore.getReference(COL_NAME).child(bus.getBusStation()).setValue(bus, null);
 		}
 		
 		
 		ArrayList<Bus> result = (ArrayList<Bus>) busList.clone();
 		busList.clear();
+
 		return result;
 		
 	}

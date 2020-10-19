@@ -1,7 +1,10 @@
 package com.example.demo.calender;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.jsoup.Jsoup;
@@ -12,16 +15,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 @RestController
 public class CalenderController {
 
 	private static String KOREA_COVID_DATAS_URL = "http://www.bu.ac.kr/web/3443/subview.do";
 	private static ArrayList<Calender> calenderList = new ArrayList<Calender>();
 //	private HashMap<String,ArrayList<HashMap<String,ArrayList<HashMap<String,ArrayList<String>>>>>> map = new HashMap<String,HashMap<String,HashMap<String,ArrayList<String>>>>();
+	public static final String COL_NAME="calendar";
 	
 	@GetMapping(value = "/calendar")
 	@ResponseBody
 	public ArrayList<Calender> calenderRest() throws IOException {
+		
+		FirebaseDatabase dbFirestore = FirebaseDatabase.getInstance();
 		Document doc = Jsoup.connect(KOREA_COVID_DATAS_URL).get();
 		Elements yearSchdulWrap = doc.getElementsByClass("yearSchdulWrap");
 		
@@ -38,6 +51,8 @@ public class CalenderController {
 			}
 			Elements dateList = y.getElementsByClass("scheList").select("span");
 			Elements contentList = y.getElementsByClass("scheList").select("strong");
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			
 			int i = 0;
 			for(Element d : dateList) {
 				
@@ -58,7 +73,14 @@ public class CalenderController {
 						calender.setDay(startday);
 						calender.setContent(content);
 						calenderList.add(calender);
+
+						Calendar firebaseDate = Calendar.getInstance();
+						firebaseDate.set(Integer.parseInt(year), month, startday);
+
+						//dbFirestore.getReference(COL_NAME).child(format.format(firebaseDate.getTime()).toString()).push().setValue(calender, null);
+						
 						calender = new Calender();
+						
 					}
 
 				}else {
@@ -67,6 +89,13 @@ public class CalenderController {
 					calender.setDay(day);
 					calender.setContent(content);
 					calenderList.add(calender);
+					Calendar firebaseDate = Calendar.getInstance();
+					firebaseDate.set(Integer.parseInt(year), month, day);
+
+					//dbFirestore.getReference(COL_NAME).child(format.format(firebaseDate.getTime()).toString()).push();
+
+					
+					
 				}
 				
 				i++;
