@@ -11,21 +11,28 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.login.LoginParam;
 
 
 
 @RestController
 public class ScheduleController {
 	
-	@GetMapping(value ="/schedule")
+	@PostMapping(value ="/schedule")
 	@ResponseBody
-	public MyLectureSchedule MySchedule() throws Exception {
+	public MyLectureSchedule MySchedule(@RequestBody LoginParam param) throws Exception {
+		
+		String id = param.getId();
+		String pw = param.getPw();
 		
 		Document doc = Jsoup.connect("http://bctl.bu.ac.kr/User.do")
-				.data("userId", "20153283")
-				.data("password", "dbstn1357!@")
+				.data("userId", id)
+				.data("password", pw)
 				.data("userDTO.loginType","30")
 				.data("cmd","loginUser")
 				.header("Content-Type", "application/x-www-form-urlencoded")
@@ -37,8 +44,8 @@ public class ScheduleController {
 				.post();
 		
 		Connection.Response response = Jsoup.connect("http://bctl.bu.ac.kr/User.do")
-				.data("userId", "20153283")
-				.data("password", "dbstn1357!@")
+				.data("userId", id)
+				.data("password", pw)
 				.data("userDTO.loginType","30")
 				.data("cmd","loginUser")
 				.header("Content-Type", "application/x-www-form-urlencoded")
