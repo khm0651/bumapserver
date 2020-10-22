@@ -1,5 +1,7 @@
 package com.example.demo.schedule;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,16 +19,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.login.LoginParam;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 
 @RestController
 public class ScheduleController {
 	
+	private String COL_NAME = "users";
+	private String made = "madeByBigGates";
+	
 	@PostMapping(value ="/schedule")
 	@ResponseBody
 	public MyLectureSchedule MySchedule(@RequestBody LoginParam param) throws Exception {
-		
+		FirebaseDatabase dbFirestore = FirebaseDatabase.getInstance();
 		String id = param.getId();
 		String pw = param.getPw();
 		
@@ -276,12 +282,77 @@ public class ScheduleController {
 			myLectures.setLecture(cn,lectureMap);
 			
 		}
+//		암호화
+//		MessageDigest md = MessageDigest.getInstance("SHA-256");
+//		md.update(pw.getBytes("utf8"));
+//		String hashPw = String.format("%064x", new BigInteger(1, md.digest()));
+//		HashMap<String,String> map = new HashMap<String,String>();
+//		map.put("id", id);
+//		map.put("pw", hashPw);
+//		String pwHex = byteArrayToHex(pw.getBytes());
+//		String madeHex = byteArrayToHex(made.getBytes());
+//		String uid = encryptDecrypt(pwHex,madeHex);
+//		String uidHex = byteArrayToHex(uid.getBytes());
 		
+//		복호화
+//		byte[] uidUn = hexStringToByteArray(uidHex);
+//		String uidd = new String(uidUn);
+//		String pwHexDe = encryptDecrypt(uid,madeHex);
+//		String pww = new String(hexStringToByteArray(pwHexDe));
+//
+//
+//		map.put("uid", uid);
+//		dbFirestore.getReference(COL_NAME).child(id).setValue(map,null);
 		mySchedule.setSchedule(user,myLectures);
 		return mySchedule;
 		
 	}
-
+	
+//	public String encryptDecrypt(String inputString,String key) 
+//    { 
+//
+//        String outputString = ""; 
+//  
+//        int len = inputString.length(); 
+//  
+//        int j =0;
+//        for (int i = 0; i < len; i++)  
+//        { 
+//        	if(key.length()== j) j=0;
+//            outputString = outputString +  
+//            Character.toString((char) (inputString.charAt(i) ^ key.charAt(j))); 
+//            j++;
+//        } 
+//
+//        return outputString; 
+//    } 
+//  
+//    
+//    public String byteArrayToHex(byte[] byteArray) {
+//    	  if (byteArray == null || byteArray.length == 0) {
+//    	    return null;
+//    	  }
+//    	  StringBuilder stringBuffer = new StringBuilder(byteArray.length * 2);
+//    	  String hexNumber;
+//    	  for (byte aBa : byteArray) {
+//    	    hexNumber = "0" + Integer.toHexString(0xff & aBa);
+//    	 
+//    	    stringBuffer.append(hexNumber.substring(hexNumber.length() - 2));
+//    	  }
+//    	  return stringBuffer.toString();
+//    	}
+//
+//
+//	public byte[] hexStringToByteArray(String s) {
+//	    int len = s.length();
+//	    byte[] data = new byte[len / 2];
+//	    for (int i = 0; i < len; i += 2) {
+//	        data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+//	                             + Character.digit(s.charAt(i+1), 16));
+//	    }
+//	    return data;
+//	}
+	
 	public String viewCourse(String courseIdNownerName){
 
 		String courseId = courseIdNownerName.split(",")[0];
