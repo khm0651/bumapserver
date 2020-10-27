@@ -251,19 +251,25 @@ public class ScheduleController {
 							Elements listContents = listBox.getElementsByClass("listContent");
 							for(Element listContent : listContents) {
 								Notice n = new Notice();
-								String title = listContent.getElementsByClass("boardTitleNcontent TITLE_ORIGIN").get(0).text();
-								Elements items = listContent.getElementsByClass("info").get(0).getElementsByClass("fr mr10").select("li");
-								HashMap<String,String> map = new HashMap<String,String>();
-								for(Element li : items) {
-									map.put(li.text().split(":")[0].trim(), li.text().split(":")[1].trim());
+								if(!listContent.getElementsByClass("info").isEmpty()) {
+									
+									String title = listContent.getElementsByClass("boardTitleNcontent TITLE_ORIGIN").get(0).text();
+									
+									Elements items = listContent.getElementsByClass("info").get(0).getElementsByClass("fr mr10").select("li");
+									HashMap<String,String> map = new HashMap<String,String>();
+									for(Element li : items) {
+										map.put(li.text().split(":")[0].trim(), li.text().split(":")[1].trim());
+									}
+									String content = listContent.getElementsByClass("cont boardTitleNcontent BOARD_CONTENTS_ORIGIN").get(0).text();
+									
+									n.setTitle(title);
+									n.setInfo(map);
+									n.setContent(content);
+									noticeMap.put(String.valueOf(j), n);
+									j++;
+									
 								}
-								String content = listContent.getElementsByClass("cont boardTitleNcontent BOARD_CONTENTS_ORIGIN").get(0).text();
-								
-								n.setTitle(title);
-								n.setInfo(map);
-								n.setContent(content);
-								noticeMap.put(String.valueOf(j), n);
-								j++;
+
 							}
 
 							
