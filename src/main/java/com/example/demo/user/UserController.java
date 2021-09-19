@@ -35,12 +35,17 @@ public class UserController {
     @PostMapping("/registerUser")
     @ResponseBody
     public String registerUser(@RequestBody UserDto userDto){
-        String insertQuery = "insert into user (name, email) values(?,?)";
-        int result = jdbcTemplate.update(insertQuery,userDto.name,userDto.email);
-        if(result > 0){
-            return "Success";
-        }else{
+        try{
+            String insertQuery = "insert into user (name, email) values(?,?)";
+            int result = jdbcTemplate.update(insertQuery,userDto.name,userDto.email);
+            if(result > 0){
+                return "Success";
+            }else{
+                return "fail";
+            }
+        } catch (Exception e){
             return "fail";
         }
+
     }
 }
