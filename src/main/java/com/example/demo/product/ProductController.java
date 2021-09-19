@@ -46,6 +46,27 @@ public class ProductController {
         jdbcTemplate.update(insertQuery,productLikeDto.email,productLikeDto.productUID);
     }
 
+    @GetMapping("/favorite_product")
+    @ResponseBody
+    List<ProductDto> getFavoriteProduct(@RequestParam("email")String email){
+        String query = "SELECT " +
+                "p.uid, " +
+                "p.shop_uid, " +
+                "p.product_name, " +
+                "p.product_img, " +
+                "p.product_category, " +
+                "p.product_price, " +
+                "p.product_like, " +
+                "p.product_size, " +
+                "p.product_color, " +
+                "p.product_link " +
+                "FROM product_like as pl, product as p where pl.product_uid = p.uid and pl.user_email = ?";
+        List<Map<String, Object>> result = jdbcTemplate.queryForList(query, email);
+        String content = Json.getJsonFrom(result);
+        return Json.deserializeAsListOf(content, ProductDto.class);
+
+    }
+
     @GetMapping("/product/category")
     @ResponseBody
     List<ProductDto> getProduct(@RequestParam("type") String type){
